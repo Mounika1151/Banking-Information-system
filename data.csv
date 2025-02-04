@@ -1,0 +1,23 @@
+public class FraudDetection {
+    public static void main(String[] args) {
+        try {
+            // Load the dataset
+            DataSource source = new DataSource("transaction_data.csv");
+            Instances data = source.getDataSet();
+
+            // Set the class index (target variable)
+            data.setClassIndex(data.numAttributes() - 1);
+
+            // Build the classifier
+            Classifier classifier = new J48();
+            classifier.buildClassifier(data);
+
+            // Save the model
+            SerializationHelper.write("fraudDetectionModel.model", classifier);
+
+            System.out.println("Model built and saved successfully!");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
